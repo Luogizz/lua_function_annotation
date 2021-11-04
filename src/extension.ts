@@ -83,15 +83,15 @@ export function activate(context: vscode.ExtensionContext) {
 		const functionEndIndex = fileName.lastIndexOf('\\');
 		fileName = fileName.substring(functionEndIndex + 1, fileName.length).replace(" ", "");
 
-		let fileNameStr =`-- @File:${fileName}\n`;
+		let fileNameStr =`-- @File: ${fileName}\n`;
 		baseStr = baseStr + fileNameStr;
 
 		// 文件名
-		let desStr =`-- @Summary:\n`;
+		let desStr =`-- @Summary: \n`;
 		baseStr = baseStr + desStr;
 
 		// 文件名
-		let versionStr =`-- @Version:1.0\n`;
+		let versionStr =`-- @Version: 1.0\n`;
 		baseStr = baseStr + versionStr;
 
 		// 作者
