@@ -18,8 +18,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 	let sel: DocumentSelector = { scheme: 'file', language: 'lua' };
 
-	function createFuncAnnotationCompletion(document: vscode.TextDocument, position: vscode.Position, token: vscode.CancellationToken, context: vscode.CompletionContext)
-	{
+	function createFuncAnnotationCompletion(document: vscode.TextDocument, position: vscode.Position, token: vscode.CancellationToken, context: vscode.CompletionContext) {
 		const line = document.lineAt(position.line + 1);
 		const text = line.text;
 
@@ -46,23 +45,23 @@ export function activate(context: vscode.ExtensionContext) {
 		const snippetCompletion = new vscode.CompletionItem('antt');
 		let baseStr = "-- ************************************************************\n";
 
-		// 作者
-		let authorStr = "-- @Author: luogizz\n";
-		baseStr = baseStr + authorStr;
+		// // 作者
+		// let authorStr = "-- @Author: xxxxxx\n";
+		// baseStr = baseStr + authorStr;
 
-		// 时间
-		let formattedDateStr =`-- @Date: ${(moment(new Date())).format('YYYY-MM-DD HH:mm:ss')}\n`; 
-		baseStr = baseStr + formattedDateStr;
+		// // 时间
+		// let formattedDateStr = `-- @Date: ${(moment(new Date())).format('YYYY-MM-DD HH:mm:ss')}\n`;
+		// baseStr = baseStr + formattedDateStr;
 
 		// 函数名
-		let funcNameStr =`-- @FuncName: ${functionName}\n`;
+		let funcNameStr = `-- @FuncName: ${functionName}\n`;
 		baseStr = baseStr + funcNameStr;
-		
+
 		let index = 1;
 		// 函数变量
 		params.forEach(element => {
 			if (element.length > 0) {
-				baseStr = baseStr + `-- @Args${index}: ${element.replace(" ", "")}\n`;
+				baseStr = baseStr + `-- @Param${index}: ${element.replace(" ", "")}\n`;
 				index++;
 			}
 
@@ -83,38 +82,38 @@ export function activate(context: vscode.ExtensionContext) {
 		const functionEndIndex = fileName.lastIndexOf('\\');
 		fileName = fileName.substring(functionEndIndex + 1, fileName.length).replace(" ", "");
 
-		let fileNameStr =`-- @File: ${fileName}\n`;
+		let fileNameStr = `-- @File: ${fileName}\n`;
 		baseStr = baseStr + fileNameStr;
 
 		// 文件名
-		let desStr =`-- @Summary: \n`;
+		let desStr = `-- @Summary: \n`;
 		baseStr = baseStr + desStr;
 
 		// 文件名
-		let versionStr =`-- @Version: 1.0\n`;
+		let versionStr = `-- @Version: 1.0\n`;
 		baseStr = baseStr + versionStr;
 
 		// 作者
-		let authorStr = "-- @Author: luogizz\n";
+		let authorStr = "-- @Author: xxxxxx\n";
 		baseStr = baseStr + authorStr;
 
 		// 时间
-		let formattedDateStr =`-- @Date: ${(moment(new Date())).format('YYYY-MM-DD HH:mm:ss')}\n`; 
+		let formattedDateStr = `-- @Date: ${(moment(new Date())).format('YYYY-MM-DD HH:mm:ss')}\n`;
 		baseStr = baseStr + formattedDateStr;
 
 		baseStr = baseStr + '-- ************************************************************';
 
 
 		snippetCompletion.insertText = new vscode.SnippetString(baseStr);
-		snippetCompletion.documentation = new vscode.MarkdownString("输入fantt, 生成文件注释");
+		snippetCompletion.documentation = new vscode.MarkdownString("输入fantt, 生成文件注释(注意,输入的时候,下一行不能为空,空行也行)");
 		return snippetCompletion
 	}
 
 	let provider1 = vscode.languages.registerCompletionItemProvider(sel, {
 		provideCompletionItems(document: vscode.TextDocument, position: vscode.Position, token: vscode.CancellationToken, context: vscode.CompletionContext) {
 
-			const snippetCompletion1 = createFuncAnnotationCompletion(document,position,token,context);
-			const snippetCompletion2 = createFileAnnotationCompletion(document,position,token,context);
+			const snippetCompletion1 = createFuncAnnotationCompletion(document, position, token, context);
+			const snippetCompletion2 = createFileAnnotationCompletion(document, position, token, context);
 
 			return [
 				snippetCompletion1,
